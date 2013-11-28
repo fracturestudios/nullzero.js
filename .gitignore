@@ -1,5 +1,5 @@
 
 init.cmd
 *~
-.swo
-.swp
+*.swo
+*.swp
