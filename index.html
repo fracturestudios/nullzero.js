@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Play | nullzero.js</title>
+
+        <style type="text/css">
+            html, body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+        </style>
+
+        <!-- Init the canvas and create the NZJS namespace object -->
+        <script src="src/init.js"></script>
+
+        <!-- The networking stack -->
+        <script src="src/network/rtc.js"></script>
+        <script src="src/network/transport.js"></script>
+
+        <!-- The client/server subsystem -->
+        <script src="src/kernel/client.js"></script>
+        <script src="src/kernel/server.js"></script>
+
+        <!-- Graphics -->
+        <script src="src/graphics/webgl.js"></script>
+        <script src="src/graphics/mesh.js"></script>
+        <script src="src/graphics/primitive.js"></script>
+
+        <!-- Audio -->
+
+        <!-- Input -->
+        <script src="src/input/axis.js"></script>
+        <script src="src/input/button.js"></script>
+        <script src="src/input/state.js"></script>
+        <script src="src/input/record.js"></script>
+
+        <!-- AI -->
+        <script src="src/ai/idle.js"></script>
+        <script src="src/ai/hold.js"></script>
+        <script src="src/ai/evade.js"></script>
+        <script src="src/ai/move.js"></script>
+        <script src="src/ai/formation.js"></script>
+        <script src="src/ai/patrol.js"></script>
+        <script src="src/ai/attack.js"></script>
+
+        <!-- Entities -->
+        <script src="src/entity/null.js"></script>
+        <script src="src/entity/gate.js"></script>
+        <script src="src/entity/surface.js"></script>
+
+        <!-- Maps -->
+        <script src="src/map/map.js"></script>
+
+        <!-- Game screens -->
+        <script src="src/screen/load.js"></script>
+        <script src="src/screen/menu.js"></script>
+        <script src="src/screen/game.js"></script>
+
+        <!-- Debugging helpers -->
+        <script src="src/debug/replay.js"></script>
+
+        <!-- Run tthe game loop -->
+        <script src="src/main.js"></script>
+    </head>
+    <body onload="NZJS.main()">
+        <canvas id="nzjsCanvas" width="640" height="480" style="cursor: none">
+            Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
+        </canvas>
+    </body>
+</html>
