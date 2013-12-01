@@ -15,11 +15,9 @@
     // Initializes the game
     function init() {
 
-        // Init WebGL
+        // Init browser-specific technologies
         NZJS.WebGL.init();
-
-        // Init WebRTC
-        // TODO
+        NZJS.RTC.init();
         
         // Create and load the load screen
         var load = new NZJS.Screens.Loading();
