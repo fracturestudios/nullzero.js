@@ -5,6 +5,7 @@
  */
 
 (function(NZJS) {
+    'use strict';
 
     var epoch = new Date().getTime();
     var now = 0;

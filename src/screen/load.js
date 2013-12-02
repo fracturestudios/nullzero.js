@@ -17,11 +17,7 @@
         this.progress = 0.0;
         this.screens = screens;
     }
-
-    if (!NZJS.Screens) {
-        NZJS.Screens = { }
-    }
-
+    NZJS.Screens = NZJS.Screens || { };
     NZJS.Screens.Loading = LoadScreen;
 
     // Loads assets needed by this screen
