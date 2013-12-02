@@ -5,6 +5,7 @@
  */
 
 ;(function(NZJS) {
+    'use strict';
 
     NZJS.Config = { };
 
@@ -21,5 +22,9 @@
     // tick/draw receives a time delta of 0.
     //
     NZJS.Config.TimeSamplingInterval = 1000.0 / 60.0;
+
+    // When true, goes to the NetDebug screen instead of the Load screen during
+    // game boot (temporary flag for development)
+    NZJS.Config.DebugNetworking = true;
 
 })(NZJS);

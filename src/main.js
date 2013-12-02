@@ -20,15 +20,24 @@
         // Init in-browser technologies (may not be supported by all browsers)
         NZJS.WebGL.init();
         NZJS.RTC.init();
-        
-        // Create and load the load screen
-        var load = new NZJS.Screens.Loading();
-        load.init();
-        screens.push(load);
 
-        // Create the main menu screen and set the load screen to show 
-        // its load progress
-        // TODO
+        if (NZJS.Config.DebugNetworking) {
+            var debug = new NZJS.Screens.NetDebug();
+            debug.init();
+            screens.push(debug);
+        }
+        else {
+            // Create and load the load screen
+            // TODO use a screen object that implements suspend/resume, and pass it
+            // to the load screen ctor
+            var load = new NZJS.Screens.Loading();
+            load.init();
+            screens.push(load);
+
+            // Create the main menu screen and set the load screen to show 
+            // its load progress
+            // TODO
+        }
     }
 
     // Schedules a future draw/tick operation.
