@@ -25,7 +25,9 @@
     NZJS.Screens.Loading = LoadScreen;
 
     // Loads assets needed by this screen
-    LoadScreen.prototype.init = function() { }
+    LoadScreen.prototype.init = function() { 
+        this.isLoaded = true; // No assets required
+    }
 
     // Updates the screen's logic
     LoadScreen.prototype.tick = function(dt) { }
