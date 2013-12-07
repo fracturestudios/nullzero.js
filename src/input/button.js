@@ -43,6 +43,10 @@
         return new NZJS.Input.NotButton(button);
     }
 
+    NZJS.Input.repeat = function(button, initialInterval, interval) {
+        return new NZJS.Input.RepeatButton(button, initialInterval, interval);
+    }
+
     // The base methods for a button object
     //
     function ButtonPrototype() {
@@ -286,9 +290,60 @@
         this.willBeDown = !this.btn.willBeDown;
         this.isDown = !this.btn.isDown;
         this.wasDown = !this.btn.wasDown;
+
+        this.isRepeating = false;
     }
 
-    // TODO repeat button that wraps a button and fires pressed() during
-    // regular intervals
+    // A button that wraps a button and returns true for pressed() over a given
+    // interval. Useful if you need key-like repeating behavior.
+    // btn - The NZJS.Input button to wrap
+    // initialInterval - The time before the first repeat, in partial seconds
+    // interval - The between subsequent repeats, in partial seconds
+    function RepeatButton(btn, initialInterval, interval) {
+        this._construct();
+
+        this.btn = btn;
+        this.initial = initialInterval;
+        this.interval = interval;
+    }
+    RepeatButton.prototype = new ButtonPrototype();
+    NZJS.Input.RepeatButton = RepeatButton;
+
+    RepeatButton.prototype.poll = function() {
+        this.btn.poll();
+
+        this.willBeDown = this.btn.willBeDown;
+        this.isDown = this.btn.isDown;
+        this.wasDown = this.btn.wasDown;
+
+        if (this.btn.down()) {
+            
+            if (!this.isRepeating) {
+
+                // Just started pressing the button - start repeating
+                this.isRepeating = true;
+                this.firstRepeat = true;
+                this.repeatTime = NZJS.getTime();
+            }
+            else if (this.firstRepeat && NZJS.getTimeDelta(this.repeatTime) > this.initial) {
+
+                // The first repeat timeout expired
+                this.firstRepeat = false;
+                this.repeatTime = NZJS.getTime();
+                this.wasDown = false; // Will cause pressed() to return true this tick
+            }
+            else if (!this.firstRepeat && NZJS.getTimeDelta(this.repeatTime) > this.interval) {
+
+                // A subsequent repeat timeout expired
+                this.repeatTime = NZJS.getTime();
+                this.wasDown = false;
+            }
+        }
+        else if (this.isRepeating) {
+            
+            // No longer repeating
+            this.isRepeating = false;
+        }
+    }
 
 })(NZJS, document);
