@@ -1,6 +1,8 @@
 <!doctype html>
 <html>
     <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+
         <title>Play | nullzero.js</title>
 
         <style type="text/css">
@@ -71,7 +73,7 @@
         <script src="src/main.js"></script>
     </head>
     <body onload="NZJS.main()">
-        <canvas id="nzjsCanvas" width="640" height="480" style="cursor: none">
+        <canvas id="nzjsCanvas" width="640" height="480" onclick="NZJS.Input.acquire()">
             Your browser doesn't appear to support the HTML5 <code>&lt;canvas&gt;</code> element.
         </canvas>
     </body>

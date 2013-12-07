@@ -20,7 +20,7 @@
     // Initializes WebGL
     NZJS.WebGL.init = function() {
 
-        var canvas = document.getElementById('nzjsCanvas');
+        var canvas = document.getElementById(NZJS.Config.CanvasID);
         var gl = null;
         try {
             gl = canvas.getContext('webgl');

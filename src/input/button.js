@@ -9,7 +9,7 @@
  *
  * var btn =     NZJS.Input.key('ctrl')
  *          .and(NZJS.Input.key('shift'))
- *          .and(NZJS.Input.mouse('leftclick'));
+ *          .and(NZJS.Input.click('leftclick'));
  *
  * Additionally, button inputs can wrap axis inputs. For example, this snippet
  * creates the variable 'btn2', which is considered down when the axis's value
@@ -19,6 +19,7 @@
  */
 
 (function(NZJS, document) {
+    'use strict';
 
     NZJS.Input = NZJS.Input || { };
 
@@ -30,7 +31,7 @@
         return new NZJS.Input.KeyButton(key);
     }
 
-    NZJS.Input.mouse = function(button) {
+    NZJS.Input.click = function(button) {
         return new NZJS.Input.MouseButton(button);
     }
 
@@ -131,6 +132,7 @@
     // - 'meta' for either meta key
     //
     function KeyButton(key) {
+        this._construct();
 
         this.key = key.toUpperCase();
 
@@ -178,6 +180,7 @@
     // - 'rightclick' for the right button
     //
     function MouseButton(button) {
+        this._construct();
 
         this.button = button;
 
@@ -208,6 +211,8 @@
     // between minDown and maxDown, inclusive
     //
     function AxisButton(axis, minDown, maxDown) {
+        this._construct();
+
         this.axis = axis;
         this.minDown = minDown;
         this.maxDown = maxDown;
@@ -226,6 +231,8 @@
     // constructor are down
     //
     function AndButton(btn1, btn2) {
+        this._construct();
+
         this.left = btn1;
         this.right = btn2;
     }
@@ -245,6 +252,8 @@
     // constructor are down
     //
     function OrButton(btn1, btn2) {
+        this._construct();
+
         this.left = btn1;
         this.right = btn2;
     }
@@ -264,6 +273,8 @@
     // up
     //
     function NotButton(btn) {
+        this._construct();
+
         this.btn = btn;
     }
     NotButton.prototype = new ButtonPrototype();
@@ -276,5 +287,8 @@
         this.isDown = !this.btn.isDown;
         this.wasDown = !this.btn.wasDown;
     }
+
+    // TODO repeat button that wraps a button and fires pressed() during
+    // regular intervals
 
 })(NZJS, document);

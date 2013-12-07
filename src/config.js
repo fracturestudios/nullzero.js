@@ -27,4 +27,7 @@
     // game boot (temporary flag for development)
     NZJS.Config.DebugNetworking = true;
 
+    // The id of the HTML5 <canvas> element to beind to
+    NZJS.Config.CanvasID = 'nzjsCanvas';
+
 })(NZJS);
