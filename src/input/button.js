@@ -47,6 +47,15 @@
         return new NZJS.Input.RepeatButton(button, initialInterval, interval);
     }
 
+    NZJS.Input.buttonSnapshot = function(button) {
+        return new NZJS.Input.ButtonSnapshot(
+                button.down(),
+                button.up(),
+                button.pressed(),
+                button.released()
+        );
+    }
+
     // The base methods for a button object
     //
     function ButtonPrototype() {
@@ -345,5 +354,20 @@
             this.isRepeating = false;
         }
     }
+
+    // An NZJS.Input button that just returns a fixed state
+    //
+    function ButtonSnapshot(wasDown, wasUp, wasPressed, wasReleased) {
+        this.wasDown = wasDown;
+        this.wasUp = wasUp;
+        this.wasPressed = wasPressed;
+        this.wasReleased = wasReleased;
+    }
+    NZJS.Input.ButtonSnapshot = ButtonSnapshot;
+
+    ButtonSnapshot.prototype.down = function() { return this.wasDown; }
+    ButtonSnapshot.prototype.up = function() { return this.wasUp; }
+    ButtonSnapshot.prototype.pressed = function() { return this.wasPressed; }
+    ButtonSnapshot.prototype.released = function() { return this.wasReleased; }
 
 })(NZJS, document);

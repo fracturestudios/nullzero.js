@@ -129,7 +129,7 @@
             var name = buttonNames[i];
 
             // Store the snapshot of the button's state in this state
-            this.buttons[name] = new ButtonSnapshot(next.buttons[name]);
+            this.buttons[name] = NZJS.Input.buttonSnapshot(next.buttons[name]);
 
             // Poll the button to get the button's state in the next state
             next.buttons[name].poll();
@@ -140,33 +140,11 @@
         for (var i = 0; i < axisNames.length; ++i) {
             var name = axisNames[i];
 
-            this.axes[name] = new AxisSnapshot(next.axes[name]);
+            this.axes[name] = NZJS.Input.axisSnapshot(next.axes[name]);
             next.axes[name].poll();
         }
 
         return next;
-    }
-
-    // An NZJS.Input button that just returns the state of the button passed
-    // to the constructor at the time this snapshot was created
-    //
-    function ButtonSnapshot(btn) {
-        this.wasDown = btn.down();
-        this.wasUp = btn.up();
-        this.wasPressed = btn.pressed();
-        this.wasReleased = btn.released();
-    }
-
-    ButtonSnapshot.prototype.down = function() { return this.wasDown; }
-    ButtonSnapshot.prototype.up = function() { return this.wasUp; }
-    ButtonSnapshot.prototype.pressed = function() { return this.wasPressed; }
-    ButtonSnapshot.prototype.released = function() { return this.wasReleased; }
-
-    // An NZJS.Input xis that just returns the state of the axis passed to the
-    // constructor at the time this snapshot was created
-    //
-    function AxisSnapshot(axis) {
-        this.value = axis.value;
     }
 
 })(NZJS);

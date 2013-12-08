@@ -18,12 +18,19 @@
         return new NZJS.Input.MouseAxis(direction, sensitivity);
     }
 
-    // Returns a new NZJS.ButtonAxis with zero attached buttons.
+    // Returns a new NZJS.Input.ButtonAxis with zero attached buttons.
     // Call .withButton() to attach a button.
     // baseValue is the value of the axis before any button values are applied.
     //
     NZJS.Input.buttonAxis = function(baseValue) {
         return new NZJS.Input.ButtonAxis(baseValue);
+    }
+
+    // Returns a new NZJS.Input.AxisSnapshot mirroring the state of the given
+    // axis
+    //
+    NZJS.Input.axisSnapshot = function(axis) {
+        return new NZJS.Input.AxisSnapshot(axis.value);
     }
 
     // Acquires input from the browser
@@ -135,5 +142,12 @@
             this.value += b.btn.down() ? b.down : b.up;
         }
     }
+
+    // An NZJS.Input axis that just returns a fixed state
+    //
+    function AxisSnapshot(value) {
+        this.value = value;
+    }
+    NZJS.Input.AxisSnapshot = AxisSnapshot;
 
 })(NZJS, document);
