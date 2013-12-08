@@ -20,7 +20,18 @@
         this.ucon = unreliableConn;
 
         this.rcon.onrecv = this.ucon.onrecv = function(datagram) {
-            this.onrecv(datagram);
+
+            if (!datagram.what) {
+                console.log('NZJS.Transport.Connection: packet ' + JSON.stringify(datagram));
+                console.log('NJZS.Transport.Connection: is missing a "what" property');
+            }
+            else if (!datagram.data) {
+                console.log('NZJS.Transport.Connection: packet ' + JSON.stringify(datagram));
+                console.log('NJZS.Transport.Connection: is missing a "data" property');
+            }
+            else {
+                this.onrecv(datagram.what, datagram.data);
+            }
         }
     }
 
@@ -38,9 +49,12 @@
 
     // Event handler fired when a datagram is received.
     // The default stub prints a warning about the unhandled event.
+    // what - what type of data is being sent (e.g. 'InputState')
+    // data - the data to send
     //
-    Connection.prototype.onrecv = function(datagram) {
-        console.log('NZJS.Transport.Connection: received: ' + JSON.stringify(datagram));
+    Connection.prototype.onrecv = function(what, data) {
+        console.log('NZJS.Transport.Connection: for: ' + what);
+        console.log('NZJS.Transport.Connection: received: ' + JSON.stringify(data));
         console.log('NZJS.Transport.Connection: override onrecv() to suppress this message.');
     }
 
@@ -49,9 +63,11 @@
     // Thus, use this only for non-critical data, or when missing data
     // can be receovered from (e.g. game state frames).
     // This conection must be ready (this.ready() == true).
+    // what - what type of data is being sent (e.g. 'InputState')
+    // data - the data to send
     //
-    Connection.prototype.send = function(datagram) {
-        this.ucon.send(datagram);
+    Connection.prototype.send = function(what, data) {
+        this.ucon.send({ what: what, data: data });
     }
 
     // Sends a datagram to the other peer losslessly.
@@ -59,9 +75,11 @@
     // Thus, use this only for critical data, the loss of which cannot
     // be receoved from (e.g. signaling).
     // This conection must be ready (this.ready() == true).
+    // what - what type of data is being sent (e.g. 'InputState')
+    // data - the data to send
     //
     Connection.prototype.sendReliably = function(datagram) {
-        this.rcon.send(datagram);
+        this.rcon.send({ what: what, data: data });
     }
 
     // Closes this connection permanently
