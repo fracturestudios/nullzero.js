@@ -134,7 +134,7 @@
         var diff = {
             since: since,
             now: now,
-            keyframes: [ ];
+            keyframes: [ ],
         };
 
         for (var i = 0; i < this.keyframes.length; ++i) {
