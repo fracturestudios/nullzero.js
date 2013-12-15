@@ -50,7 +50,6 @@
     NZJS.Input.buttonSnapshot = function(button) {
         return new NZJS.Input.ButtonSnapshot(
                 button.down(),
-                button.up(),
                 button.pressed(),
                 button.released()
         );
@@ -357,16 +356,15 @@
 
     // An NZJS.Input button that just returns a fixed state
     //
-    function ButtonSnapshot(wasDown, wasUp, wasPressed, wasReleased) {
+    function ButtonSnapshot(wasDown, wasPressed, wasReleased) {
         this.wasDown = wasDown;
-        this.wasUp = wasUp;
         this.wasPressed = wasPressed;
         this.wasReleased = wasReleased;
     }
     NZJS.Input.ButtonSnapshot = ButtonSnapshot;
 
     ButtonSnapshot.prototype.down = function() { return this.wasDown; }
-    ButtonSnapshot.prototype.up = function() { return this.wasUp; }
+    ButtonSnapshot.prototype.up = function() { return !this.wasDown; }
     ButtonSnapshot.prototype.pressed = function() { return this.wasPressed; }
     ButtonSnapshot.prototype.released = function() { return this.wasReleased; }
 

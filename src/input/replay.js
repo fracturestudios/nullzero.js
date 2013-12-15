@@ -84,9 +84,19 @@
 
             for (var name in deltas.button) {
                 if (deltas.button.hasOwnProperty(name)) {
+                    state.buttons[name] = state.buttons[name] ||
+                                          new NZJS.Input.ButtonSnapshot();
+
                     state.buttons[name].wasDown = deltas.button[name];
+                    state.buttons[name].wasPressed = false;
+                    state.buttons[name].wasReleased = false;
 
                     if (!handled) {
+
+                        // This is the first time we processed the keyframe
+                        // So if the button is down, it was also pressed;
+                        // likewise, if the button is up, it was also released
+                        //
                         if (state.buttons[name].wasDown) {
                             state.buttons[name].wasPressed = true;
                         }
@@ -99,6 +109,9 @@
 
             for (var name in deltas.axis) {
                 if (deltas.axis.hasOwnProperty(name)) {
+                    state.axes[name] = state.axes[name] || 
+                                       new NZJS.Input.AxisSnapshot();
+
                     state.axes[name].value = deltas.axis[name];
                 }
             }

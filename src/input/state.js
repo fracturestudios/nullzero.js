@@ -85,33 +85,43 @@
     // Indicates whether a named button is being pressed
     //
     InputState.prototype.down = function(name) {
-        return this.buttons[name].down();
+
+        var b = this.buttons[name];
+        return b && b.down();
     }
 
     // Indicates whether a named button is not being pressed
     //
     InputState.prototype.up = function(name) {
-        return this.buttons[name].up();
+
+        var b = this.buttons[name];
+        return b && b.up();
     }
 
     // Indicates whether this is the first tick a given named button is being
     // pressed
     //
     InputState.prototype.pressed = function(name) {
-        return this.buttons[name].pressed();
+
+        var b = this.buttons[name];
+        return b && b.pressed();
     }
 
     // Indicates whether this is the first tick a given named button is no
     // longer being pressed
     //
     InputState.prototype.released = function(name) {
-        return this.buttons[name].released();
+
+        var b = this.buttons[name];
+        return b && b.released();
     }
 
     // Gets the value of a named axis
     //
     InputState.prototype.value = function(name) {
-        return this.axes[name].value;
+
+        var a = this.axes[name];
+        return a && a.value;
     }
 
     // Produces the next input state snapshot by polling the underlying inputs
