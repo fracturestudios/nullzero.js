@@ -40,7 +40,7 @@
         var record = new NZJS.Input.Record(60.0);
         var otherRecord = new NZJS.Input.Record(60.0);
 
-        record.record(state, 0.0);
+        record.record(state, 0.001);
 
         state.buttons['b1'].wasDown = false;
         state.buttons['b2'].wasDown = true;
@@ -48,7 +48,7 @@
         state.axes['a2'].value = 0.9;
         record.record(state, 0.1);
 
-        otherRecord.apply(record.diff(-.1, 0.1));
+        otherRecord.unpack(record.pack(-.1));
 
         state.buttons['b1'].wasDown = true;
         state.buttons['b2'].wasDown = false;
@@ -62,7 +62,7 @@
         state.axes['a2'].value = 0.9;
         record.record(state, 0.3);
 
-        otherRecord.apply(record.diff(0.1, 0.3));
+        otherRecord.unpack(record.pack(0.1));
 
         state.buttons['b1'].wasDown = true;
         state.buttons['b2'].wasDown = false;
@@ -70,19 +70,27 @@
         state.axes['a2'].value = 1.0;
         record.record(state, 0.4);
 
-        otherRecord.apply(record.diff(0.3, 0.4));
+        otherRecord.unpack(record.pack(0.3));
         record = otherRecord;
 
-        // Make sure the replay has the right data
-        var replay = record.beginReplay();
+        // Make sure the walk has the right data
+        var walk = record.beginWalk(0.0);
+        var state = walk.state;
 
-        var state = replay.stateAt(0.0);
+        if (state.down('b1')) throw new Error();
+        if (state.down('b2')) throw new Error();
+        if (state.value('a1')) throw new Error();
+        if (state.value('a2')) throw new Error();
+
+        walk.advanceTo(0.01);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
         if (state.value('a1') != 0.0) throw new Error();
         if (state.value('a2') != 1.0) throw new Error();
 
-        state = replay.stateAt(0.05);
+        walk.advanceTo(0.05);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (state.released('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
@@ -90,7 +98,8 @@
         if (state.value('a1') != 0.0) throw new Error();
         if (state.value('a2') != 1.0) throw new Error();
 
-        state = replay.stateAt(0.1);
+        walk.advanceTo(0.1);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (state.released('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
@@ -98,7 +107,8 @@
         if (state.value('a1') != 0.1) throw new Error();
         if (state.value('a2') != 0.9) throw new Error();
 
-        state = replay.stateAt(0.15);
+        walk.advanceTo(0.15);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (state.released('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
@@ -106,7 +116,8 @@
         if (state.value('a1') != 0.1) throw new Error();
         if (state.value('a2') != 0.9) throw new Error();
 
-        state = replay.stateAt(0.2);
+        walk.advanceTo(0.2);
+        state = walk.state;
         if (!state.down('b1')) throw new Error();
         if (!state.pressed('b1')) throw new Error();
         if (!state.up('b2')) throw new Error();
@@ -114,7 +125,8 @@
         if (state.value('a1') != 0.2) throw new Error();
         if (state.value('a2') != 0.8) throw new Error();
 
-        state = replay.stateAt(0.25);
+        walk.advanceTo(0.25);
+        state = walk.state;
         if (!state.down('b1')) throw new Error();
         if (state.pressed('b1')) throw new Error();
         if (!state.up('b2')) throw new Error();
@@ -122,7 +134,8 @@
         if (state.value('a1') != 0.2) throw new Error();
         if (state.value('a2') != 0.8) throw new Error();
 
-        state = replay.stateAt(0.3);
+        walk.advanceTo(0.3);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (!state.released('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
@@ -130,7 +143,8 @@
         if (state.value('a1') != 0.1) throw new Error();
         if (state.value('a2') != 0.9) throw new Error();
 
-        state = replay.stateAt(0.35);
+        walk.advanceTo(0.35);
+        state = walk.state;
         if (!state.up('b1')) throw new Error();
         if (state.released('b1')) throw new Error();
         if (!state.down('b2')) throw new Error();
@@ -138,7 +152,8 @@
         if (state.value('a1') != 0.1) throw new Error();
         if (state.value('a2') != 0.9) throw new Error();
 
-        state = replay.stateAt(0.4);
+        walk.advanceTo(0.4);
+        state = walk.state;
         if (!state.down('b1')) throw new Error();
         if (!state.pressed('b1')) throw new Error();
         if (!state.up('b2')) throw new Error();
@@ -146,7 +161,8 @@
         if (state.value('a1') != 0.0) throw new Error();
         if (state.value('a2') != 1.0) throw new Error();
 
-        state = replay.stateAt(0.45);
+        walk.advanceTo(0.45);
+        state = walk.state;
         if (!state.down('b1')) throw new Error();
         if (state.pressed('b1')) throw new Error();
         if (!state.up('b2')) throw new Error();
