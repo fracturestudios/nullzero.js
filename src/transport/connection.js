@@ -1,8 +1,8 @@
 /*
- * transport.js
+ * connection.js
  *
- * Implements the WebRTC-driven Transport Layer of the layered multiplayer
- * model. 
+ * Responsible for sending and receiving datagrams to/from peers.
+ * Driven by WebRTC.
  */
 
 ;(function(NZJS) {
@@ -42,7 +42,7 @@
     // should not use it to send data (the data may not be sent,
     // even if you call sendReliabily())
     //
-    Connection.prototype.ready = function() {
+    Connection.prototype.isReady = function() {
         return this.ucon.state == NZJS.RTC.ConnectionState.Opened &&
                this.rcon.state == NZJS.RTC.ConnectionState.Opened;
     }
